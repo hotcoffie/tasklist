@@ -1,5 +1,6 @@
 package com.xattit.tasklist.conf;
 
+import com.xattit.tasklist.ApplicationException;
 import com.xattit.tasklist.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -19,15 +20,15 @@ import java.io.IOException;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionAdvice {
-    @ExceptionHandler(RuntimeException.class)
-    public Result runtimeExceptionHandler(RuntimeException e) {
-        log.error(e.getMessage());
+    @ExceptionHandler(ApplicationException.class)
+    public Result runtimeExceptionHandler(ApplicationException e) {
+        log.error("业务异常: {}", e.getMessage());
         return Result.fail(e.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public void runtimeExceptionHandler(HttpRequestMethodNotSupportedException e, HttpServletResponse response) throws IOException {
-        log.error(e.getMessage());
+        log.error(e.getMethod());
         response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }
 

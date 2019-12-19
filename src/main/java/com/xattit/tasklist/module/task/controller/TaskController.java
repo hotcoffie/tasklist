@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Description
@@ -25,7 +24,7 @@ public class TaskController {
 
     @GetMapping
     public Result search(Integer userId, Date date) {
-        List<Map<String, Object>> tasks = taskService.search(userId, date);
+        List<Task> tasks = taskService.search(userId, date);
         return Result.success(tasks);
     }
 

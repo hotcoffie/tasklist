@@ -1,5 +1,6 @@
 package com.xattit.tasklist.module.security.service;
 
+import com.xattit.tasklist.ApplicationException;
 import com.xattit.tasklist.module.security.dao.UserDao;
 import com.xattit.tasklist.module.security.entity.User;
 import lombok.extern.slf4j.Slf4j;
@@ -27,36 +28,29 @@ public class UserService {
 
     public void add(User user) {
         if (user == null) {
-            throw new RuntimeException("无效的参数");
+            throw new ApplicationException("无效的参数");
         }
         List<String> errors = new ArrayList<>();
         String pwd = user.getPassword();
-        if (StringUtils.isBlank(pwd)) {
-            errors.add("密码不能为空");
-        }
-        if (pwd.length() > 20 || pwd.length() < 6) {
+        if (StringUtils.isBlank(pwd) || pwd.length() > 20 || pwd.length() < 6) {
             errors.add("密码必须大于等于6位，小于等于20位");
         }
         String username = user.getUsername();
-        if (StringUtils.isBlank(username)) {
-            errors.add("账号不能为空");
-        }
-        if (username.length() > 20) {
-            errors.add("账号不能超过20位");
+        if (StringUtils.isBlank(username) || username.length() > 20 || username.length() < 3) {
+            errors.add("账号必须大于等于3位，小于等于20位");
         }
         String name = user.getName();
         if (StringUtils.isBlank(name)) {
             errors.add("用户名不能为空");
-        }
-        if (name.length() > 20) {
-            errors.add("用户名不能超过20位");
+        } else if (name.length() > 20 || name.length() < 2) {
+            errors.add("用户名必须大于等于2位，小于等于20位");
         }
         if (!errors.isEmpty()) {
-            throw new RuntimeException(String.join(",", errors));
+            throw new ApplicationException(String.join(",", errors));
         }
         User testUser = userDao.selectByUsername(username);
         if (testUser != null) {
-            throw new RuntimeException("账号已注册，忘记密码请联系管理员");
+            throw new ApplicationException("账号已注册，忘记密码请联系管理员");
         }
 //        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCreateTime(null);

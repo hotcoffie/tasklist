@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.*;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Description
@@ -17,7 +16,7 @@ import java.util.Map;
 @Mapper
 public interface TaskDao {
     @Select("<script>" +
-            "select t2.name `userName`, t1.this_week, t1.after_week, t1.checked " +
+            "select t2.name, t1.this_week, t1.after_week, t1.checked " +
             "from task t1 join security_user t2 on t1.user_id=t2.id " +
             "<where>" +
             "   <if test=\"userId!=null and userId!=''\"> " +
@@ -27,7 +26,7 @@ public interface TaskDao {
             "   order by t2.name asc " +
             "</where>" +
             "</script>")
-    List<Map<String, Object>> search(@Param("userId") Integer userId, @Param("date") Date date);
+    List<Task> search(@Param("userId") Integer userId, @Param("date") Date date);
 
     @Select("select * from task " +
             "where user_id=#{userId} and create_time=#{createTime}")

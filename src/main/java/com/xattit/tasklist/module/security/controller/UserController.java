@@ -24,6 +24,11 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @PostMapping("login")
+    public Result login(String username, String password) {
+        return Result.ok();
+    }
+
     /**
      * 该方法是注册用户的方法，默认放开访问控制
      *
