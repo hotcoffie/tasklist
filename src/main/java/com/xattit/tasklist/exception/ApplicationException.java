@@ -1,7 +1,7 @@
-package com.xattit.tasklist;
+package com.xattit.tasklist.exception;
 
 /**
- * Description
+ * Description 应用异常
  *
  * @author xieyu
  * @version v1.0.0

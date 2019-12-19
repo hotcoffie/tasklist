@@ -1,10 +1,11 @@
 package com.xattit.tasklist.module.security.service;
 
-import com.xattit.tasklist.ApplicationException;
+import com.xattit.tasklist.exception.ApplicationException;
 import com.xattit.tasklist.module.security.dao.UserDao;
 import com.xattit.tasklist.module.security.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,8 +24,9 @@ import java.util.List;
 public class UserService {
     @Resource
     private UserDao userDao;
-//    @Resource
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     public void add(User user) {
         if (user == null) {
@@ -52,7 +54,7 @@ public class UserService {
         if (testUser != null) {
             throw new ApplicationException("账号已注册，忘记密码请联系管理员");
         }
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreateTime(null);
         user.setUpdateTime(null);
         userDao.insertSelective(user);

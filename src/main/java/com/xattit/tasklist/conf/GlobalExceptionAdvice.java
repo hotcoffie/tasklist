@@ -1,12 +1,13 @@
 package com.xattit.tasklist.conf;
 
-import com.xattit.tasklist.ApplicationException;
+import com.xattit.tasklist.exception.ApplicationException;
 import com.xattit.tasklist.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -27,9 +28,9 @@ public class GlobalExceptionAdvice {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public void runtimeExceptionHandler(HttpRequestMethodNotSupportedException e, HttpServletResponse response) throws IOException {
-        log.error(e.getMethod());
-        response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    public void runtimeExceptionHandler(HttpRequestMethodNotSupportedException e, HttpServletRequest req,HttpServletResponse resp) throws IOException {
+        log.error("不支持的请求方式\tPath: {}\tMethod: {}",req.getRequestURI(),e.getMethod());
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(Exception.class)

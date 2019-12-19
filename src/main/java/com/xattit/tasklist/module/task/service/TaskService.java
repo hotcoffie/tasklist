@@ -1,6 +1,6 @@
 package com.xattit.tasklist.module.task.service;
 
-import com.xattit.tasklist.ApplicationException;
+import com.xattit.tasklist.exception.ApplicationException;
 import com.xattit.tasklist.module.security.dao.UserDao;
 import com.xattit.tasklist.module.task.dao.TaskDao;
 import com.xattit.tasklist.module.task.entity.Task;
