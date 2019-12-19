@@ -1,0 +1,2 @@
+INSERT INTO tasklist.security_user (id, username, password, name, create_time, update_time) VALUES (1, 'admin', '$2a$10$4mq6jjxv03R.EiODMlP86extUx7M6V8BjTCIWPZwumrgB7HKL32u.', '超级管理员', '2019-12-19 09:39:45', '2019-12-19 19:45:52');
+INSERT INTO tasklist.security_user (id, username, password, name, create_time, update_time) VALUES (2, 'xiaoxie', '$2a$10$4mq6jjxv03R.EiODMlP86extUx7M6V8BjTCIWPZwumrgB7HKL32u.', '小谢', '2019-12-19 19:45:23', '2019-12-19 19:45:23');

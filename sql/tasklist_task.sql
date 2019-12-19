@@ -1,0 +1,1 @@
+INSERT INTO tasklist.task (id, user_id, this_week, after_week, checked, create_time, update_time) VALUES (1, 1, '11111111111', '22222222222', '1', '2019-12-16 00:00:00', '2019-12-19 17:55:49');
