@@ -6,10 +6,6 @@ spring:
     active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-  jackson:
-    default-property-inclusion: non_null
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:

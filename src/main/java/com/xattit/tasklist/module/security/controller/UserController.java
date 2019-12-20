@@ -17,32 +17,14 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
-public class LoginController {
+@RequestMapping("user")
+public class UserController {
 
     @Resource
     private UserService userService;
 
-    @GetMapping("/login/{status}")
-    public String login(@PathVariable String status) {
-        if("auth".equals(status)){
-            return "没有登录";
-        }
-        if("fail".equals(status)){
-            return "登录失败";
-        }
-        if("success".equals(status)){
-            return "登录成功";
-        }
-        if("logout".equals(status)){
-            return "注销成功";
-        }
-        return "";
-    }
-
     /**
      * 该方法是注册用户的方法，默认放开访问控制
-     *
-     * @param user
      */
     @PostMapping("registry")
     public Result signUp(@RequestBody User user) {

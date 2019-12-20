@@ -5,12 +5,14 @@ import com.xattit.tasklist.module.security.dao.UserDao;
 import com.xattit.tasklist.module.task.dao.TaskDao;
 import com.xattit.tasklist.module.task.entity.Task;
 import com.xattit.tasklist.tool.DateTool;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@Slf4j
 public class TaskService {
     @Resource
     private TaskDao taskDao;
@@ -28,6 +31,8 @@ public class TaskService {
     private UserDao userDao;
 
     public List<Task> search(Integer userId, Date date) {
+        List<Map<String, Object>> rs = taskDao.time();
+        log.info(rs.toString());
         date = DateTool.getMonDayOfWeek(date);
         return taskDao.search(userId, date);
     }
@@ -76,11 +81,11 @@ public class TaskService {
 
     }
 
-    public void checkTasks(Date date) {
-        if(date==null){
+    public int checkTasks(Date date) {
+        if (date == null) {
             throw new ApplicationException("请指定任务所属日期");
         }
         date = DateTool.getMonDayOfWeek(date);
-        taskDao.checkTasks(date);
+        return taskDao.checkTasks(date);
     }
 }

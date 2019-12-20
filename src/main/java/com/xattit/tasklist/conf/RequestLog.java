@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
- * Description:
+ * Description: 全局请求日志
  *
  * @author 谢宇
  * Date: 2019/12/20 上午 12:07
@@ -31,7 +31,7 @@ public class RequestLog {
     }
 
     /**
-     * 环绕通知,环绕增强，相当于MethodInterceptor
+     * 打印请求日志
      */
     @Around("webLog()")
     public Object logHandler(ProceedingJoinPoint point) throws Throwable {
@@ -42,19 +42,15 @@ public class RequestLog {
         try {
             result = point.proceed();
         } catch (Throwable throwable) {
-            log.error("\n请求路径: ({}){}\n请求参数: {}\n执行时间: {} ms",
-                    request.getMethod(), request.getRequestURI(),
-                    Arrays.toString(point.getArgs()),
-                    System.currentTimeMillis() - startTime
-            );
+            log.error("路径: {} {}", request.getMethod(), request.getRequestURI());
+            log.error("参数: {}", Arrays.toString(point.getArgs()));
+            log.error("耗时: {} ms", System.currentTimeMillis() - startTime);
             throw throwable;
         }
-        log.info("\n请求路径: [{}] {}\n请求参数: {}\n  返回值: {}\n执行时间: {} ms",
-                request.getMethod(), request.getRequestURI(),
-                Arrays.toString(point.getArgs()),
-                JSON.toJSONString(result),
-                System.currentTimeMillis() - startTime
-        );
+        log.info("路径: {} {}", request.getMethod(), request.getRequestURI());
+        log.info("参数: {}", Arrays.toString(point.getArgs()));
+        log.info("返回: {}", JSON.toJSONString(result));
+        log.info("耗时: {} ms", System.currentTimeMillis() - startTime);
         return result;
     }
 }

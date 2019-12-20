@@ -1,5 +1,6 @@
 package com.xattit.tasklist.module.security.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,12 +27,16 @@ public class User implements Serializable, UserDetails {
 
     private String username;
 
+    @JSONField(serialize = false)
     private String password;
 
+    @JSONField(serialize = false)
     private Date createTime;
 
+    @JSONField(serialize = false)
     private Date updateTime;
 
+    @JSONField(serialize = false)
     private List<Role> roles;
 
     @Override
@@ -44,21 +49,25 @@ public class User implements Serializable, UserDetails {
         return auths;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JSONField(serialize = false)
     @Override
     public boolean isEnabled() {
         return true;
